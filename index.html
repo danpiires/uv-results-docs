@@ -236,7 +236,9 @@
         <p style="font-size:0.875rem;"><strong>Comparativo Geral Diário</strong></p>
         <p style="font-size:0.875rem;">NPS UV: <span class="dot-green"></span> 91.4 (799 resp)</p>
         <p style="font-size:0.875rem;">NPS Cluster Relationship: <span class="dot-green"></span> 90.9 (209 resp)</p>
-        <p style="font-size:0.875rem;color:#666;font-style:italic;">Contribuição do time: +0.8 pp 📈 em UV | +1.2 pp 📈 em Relationship</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;">Contribuição do time: +0.8 pp 📈 em UV | +1.2 pp 📈 em Relationship
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Contribuição em p.p.: quanto o time do M1 moveu o ponteiro do cluster e de UV. Positivo = puxou pra cima. Negativo = puxou pra baixo.</span></span>
+        </p>
       </div>
       <hr class="slack-divider">
       <div class="slack-section">
@@ -385,12 +387,19 @@
       <hr class="slack-divider">
       <div class="slack-section">
         <div class="slack-label">📅 Diário — 18/03/2026</div>
-        <p style="font-size:0.875rem;"><strong>NPS Geral do M2:</strong> <span class="dot-green"></span> 88.8 <span class="arrow-up">↑ +2.4 pp</span></p>
-        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-red"></span> 74.5 <span class="arrow-down">↓ -21.7 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 74.5 | UV: 91.4)</em></span></div>
+        <p style="font-size:0.875rem;"><strong>NPS Geral do M2:</strong> <span class="dot-green"></span> 88.8
+          <span class="arrow-up">↑ +2.4 pp</span>
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Variação vs dia anterior. ↑ = melhorou em relação a ontem. ↓ = piorou. O valor é a diferença em pontos percentuais de NPS.</span></span>
+        </p>
+        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-red"></span> 74.5 <span class="arrow-down">↓ -21.7 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 74.5 | UV: 91.4)</em>
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">NPS dos M1s do M2 nesse cluster. Entre parênteses: benchmark do cluster inteiro e de UV no mesmo dia.</span></span>
+        </span></div>
         <div class="row"><span style="font-weight:500;min-width:110px;">Relationship:</span><span><span class="dot-green"></span> 90.9 <span class="arrow-up">↑ +1.2 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 90.9 | UV: 91.4)</em></span></div>
         <br>
         <p style="font-size:0.875rem;"><strong>NPS UV:</strong> <span class="dot-green"></span> 91.4 (799 resp)</p>
-        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:<br>-1.2 pp 📉 em Financing | +0.3 pp 📈 em Relationship | -0.7 pp 📉 em UV</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Contribuição em p.p.: quanto o time do M2 moveu o NPS do cluster/UV. Positivo = puxou pra cima. Negativo = puxou pra baixo. Calculado removendo o time do resultado e comparando com e sem.</span></span>
+          <br>-1.2 pp 📉 em Financing | +0.3 pp 📈 em Relationship | -0.7 pp 📉 em UV</p>
       </div>
       <hr class="slack-divider">
       <div class="slack-section">
@@ -525,6 +534,17 @@ function showTab(i) {
   document.querySelectorAll('.bot-page').forEach((p,j) => p.classList.toggle('active', i===j));
   document.querySelectorAll('#nav button').forEach((b,j) => b.classList.toggle('active', i===j));
 }
+function toggleHelp(btn) {
+  const wrap = btn.closest('.help-wrap');
+  const wasOpen = wrap.classList.contains('open');
+  document.querySelectorAll('.help-wrap.open').forEach(w => w.classList.remove('open'));
+  if (!wasOpen) wrap.classList.add('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.help-wrap')) {
+    document.querySelectorAll('.help-wrap.open').forEach(w => w.classList.remove('open'));
+  }
+});
 </script>
 </body>
 </html>
