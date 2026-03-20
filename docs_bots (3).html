@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UV Results Bots — Documentação</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; }
+
+  header { background: #7c3aed; color: white; padding: 2rem; }
+  header h1 { font-size: 1.6rem; font-weight: 600; }
+  header p { font-size: 0.95rem; opacity: 0.85; margin-top: 0.4rem; }
+
+  nav { background: white; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+  nav button { background: none; border: none; padding: 1rem 1.2rem; font-size: 0.875rem; color: #666; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+  nav button.active { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 500; }
+  nav button:hover { color: #7c3aed; }
+
+  main { max-width: 860px; margin: 0 auto; padding: 2rem; }
+
+  .bot-page { display: none; }
+  .bot-page.active { display: block; }
+
+  .bot-header { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #e5e5e5; }
+  .bot-header h2 { font-size: 1.2rem; font-weight: 600; color: #1a1a1a; }
+  .bot-header .meta { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+  .badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .badge-purple { background: #ede9fe; color: #5b21b6; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #ffedd5; color: #9a3412; }
+  .bot-header p { margin-top: 0.75rem; font-size: 0.9rem; color: #555; line-height: 1.6; }
+
+  .section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 0.75rem; }
+
+  .slack-card { background: white; border-radius: 12px; border: 1px solid #e5e5e5; overflow: hidden; margin-bottom: 1.25rem; }
+  .slack-card-header { background: #f9f9f9; border-bottom: 1px solid #e5e5e5; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .slack-card-header .bot-avatar { width: 28px; height: 28px; border-radius: 6px; background: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .slack-card-header .bot-name { font-weight: 600; font-size: 0.875rem; }
+  .slack-card-header .app-tag { font-size: 0.65rem; background: #e5e5e5; color: #666; padding: 1px 5px; border-radius: 3px; margin-left: 2px; }
+  .slack-card-header .time { font-size: 0.75rem; color: #999; margin-left: auto; }
+
+  .slack-body { padding: 1rem; }
+  .slack-msg-header { font-weight: 700; font-size: 1rem; margin-bottom: 0.75rem; }
+  .slack-divider { border: none; border-top: 1px solid #e5e5e5; margin: 0.75rem 0; }
+  .slack-label { font-size: 0.75rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+  .slack-section { margin-bottom: 0.75rem; }
+  .slack-section p { font-size: 0.9rem; line-height: 1.7; color: #333; }
+  .slack-section .row { display: flex; gap: 0.5rem; align-items: center; margin: 0.2rem 0; font-size: 0.875rem; }
+  .slack-section .row .label { color: #666; min-width: 80px; }
+  .slack-section .row .val { font-weight: 500; }
+  .dot-green { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #22c55e; margin-right: 4px; }
+  .dot-yellow { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #eab308; margin-right: 4px; }
+  .dot-red { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; margin-right: 4px; }
+
+  .thread-container { margin-left: 2rem; border-left: 2px solid #e5e5e5; padding-left: 1rem; }
+  .thread-item { background: white; border-radius: 10px; border: 1px solid #e5e5e5; margin-bottom: 0.75rem; overflow: hidden; }
+  .thread-item-header { background: #f9f9f9; border-bottom: 1px solid #e5e5e5; padding: 0.5rem 0.75rem; font-size: 0.8rem; font-weight: 600; color: #555; display: flex; align-items: center; gap: 0.4rem; }
+  .thread-item-body { padding: 0.75rem; font-size: 0.875rem; line-height: 1.7; color: #333; }
+  .thread-item-body .item-row { display: flex; justify-content: space-between; padding: 0.2rem 0; border-bottom: 1px solid #f0f0f0; }
+  .thread-item-body .item-row:last-child { border-bottom: none; }
+  .thread-item-body .item-row .name { font-weight: 500; }
+  .thread-item-body .item-row .info { color: #666; font-size: 0.82rem; }
+
+  .collapse-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.5rem 0.75rem; font-size: 0.8rem; color: #7c3aed; cursor: pointer; font-weight: 500; }
+  .collapse-btn:hover { background: #f5f0ff; }
+  .collapsible { display: none; }
+  .collapsible.open { display: block; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card { background: white; border-radius: 10px; border: 1px solid #e5e5e5; padding: 1rem; }
+  .info-card h4 { font-size: 0.8rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .info-card p { font-size: 0.875rem; color: #333; line-height: 1.6; }
+
+  .legend { display: flex; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #555; }
+
+  .arrow-up { color: #22c55e; font-weight: 600; }
+  .arrow-down { color: #ef4444; font-weight: 600; }
+  .arrow-neutral { color: #888; }
+  .tag-thread { font-size: 0.7rem; background: #ede9fe; color: #5b21b6; padding: 2px 7px; border-radius: 10px; font-weight: 500; }
+
+  .help-wrap { display: inline-block; position: relative; }
+  .help-btn { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: #e5e5e5; color: #666; font-size: 10px; font-weight: 600; cursor: pointer; border: none; line-height: 1; margin-left: 4px; vertical-align: middle; }
+  .help-btn:hover { background: #7c3aed; color: white; }
+  .help-balloon { display: none; position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(100% + 8px); background: #1a1a1a; color: white; font-size: 0.78rem; line-height: 1.5; padding: 8px 12px; border-radius: 8px; width: 220px; z-index: 100; pointer-events: none; }
+  .help-balloon::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #1a1a1a; }
+  .help-wrap.open .help-balloon { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚀 UV Results Bots — Documentação</h1>
+  <p>Guia completo de todas as visões enviadas automaticamente pelo UV Results no Slack</p>
+</header>
+
+<nav id="nav">
+  <button class="active" onclick="showTab(0)">UV Results Geral</button>
+  <button onclick="showTab(1)">Leadership M1 Diário</button>
+  <button onclick="showTab(2)">Leadership M1 Semanal</button>
+  <button onclick="showTab(3)">M2 Diário</button>
+  <button onclick="showTab(4)">M2 Semanal</button>
+</nav>
+
+<main>
+
+<!-- ───── TAB 0: UV Results Geral ───── -->
+<div class="bot-page active" id="tab-0">
+  <div class="bot-header">
+    <h2>UV Results Bot — Visão Geral</h2>
+    <div class="meta">
+      <span class="badge badge-purple">Canal público</span>
+      <span class="badge badge-blue">Segunda a sexta</span>
+      <span class="badge badge-green">11:00</span>
+    </div>
+    <p>Publica diariamente no canal da liderança um resumo completo dos resultados de NPS de UV. A mensagem principal traz o acumulado do mês, e a thread contém os detalhes do dia anterior.</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="dot-green"></span> NPS ≥ 88 (verde)</div>
+    <div class="legend-item"><span class="dot-yellow"></span> NPS 84–87 (amarelo)</div>
+    <div class="legend-item"><span class="dot-red"></span> NPS ≤ 83 (vermelho)</div>
+  </div>
+
+  <div class="section-title">Mensagem principal — canal</div>
+  <div class="slack-card">
+    <div class="slack-card-header">
+      <div class="bot-avatar">🚀</div>
+      <span class="bot-name">UV Results</span><span class="app-tag">APP</span>
+      <span class="time">11:00</span>
+    </div>
+    <div class="slack-body">
+      <div class="slack-msg-header">🚀 Bip bip, chegou a nave dos resultados!</div>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">NPS Mensal UV — acumulado março/2026</div>
+        <p><span class="dot-green"></span><strong>NPS Geral UV:</strong> 88.8 (12.574 respostas)</p>
+      </div>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">NPS Mensal por Cluster</div>
+        <div class="row"><span class="dot-green"></span><span class="label">Security</span><span class="val">92.0</span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Relationship</span><span class="val">90.3</span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Operational</span><span class="val">88.5</span></div>
+        <div class="row"><span class="dot-yellow"></span><span class="label">Investments</span><span class="val">84.9</span></div>
+        <div class="row"><span class="dot-yellow"></span><span class="label">Financing</span><span class="val">84.2</span></div>
+        <div class="row"><span class="dot-red"></span><span class="label">General</span><span class="val">81.4</span></div>
+      </div>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">NPS Mensal por Canal</div>
+        <div class="row"><span class="dot-green"></span><span class="label">Chat</span><span class="val">89.1 (10.234 resp)</span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Fone (Twilio)</span><span class="val">88.2 (2.340 resp)</span></div>
+      </div>
+      <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Detalhes do dia na thread abaixo 👇</p>
+    </div>
+  </div>
+
+  <div class="section-title">Thread — detalhes do dia</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">📊 Resultados do Dia — 18/03/2026</div>
+      <div class="thread-item-body">
+        <p><span class="dot-green"></span><strong>NPS Geral UV (dia):</strong> 91.4 (799 respostas)</p>
+        <br>
+        <strong>NPS por Cluster — Dia</strong><br><br>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Security</span><span class="info">94.9 (semanal: 93.1) | 160 resp</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Relationship</span><span class="info">90.9 (semanal: 90.2) | 209 resp</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Operational</span><span class="info">88.5 (semanal: 87.9) | 252 resp</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">🚨 Top 5 Submotivos — Mais detratores</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 5 det de 5</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> nu_conta_pix_out</span><span class="info">NPS -100.0 | 3 det de 3</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> bill_payments_doubt</span><span class="info">NPS 20.0 | 2 det de 5</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">🔍 Top Detratores por Cluster</div>
+      <div class="thread-item-body">
+        <p><strong>UV Operational</strong></p>
+        <div class="item-row"><span class="name">defense_bacen_jud</span><span class="info">NPS -100.0 | 3 det</span></div>
+        <div class="item-row"><span class="name">bill_payments_doubt</span><span class="info">NPS 20.0 | 2 det</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">⏱️ Tempos médios</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name">AIT (tempo atendimento)</span><span class="info">538.7 seg (8.9 min)</span></div>
+        <div class="item-row"><span class="name">FRT (primeira resposta)</span><span class="info">67.7 seg (1.1 min)</span></div>
+        <div class="item-row"><span class="name">Total atendimentos</span><span class="info">761</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── TAB 1: Leadership M1 Diário ───── -->
+<div class="bot-page" id="tab-1">
+  <div class="bot-header">
+    <h2>UV Leadership Bot M1 — Diário</h2>
+    <div class="meta">
+      <span class="badge badge-purple">DM para cada M1</span>
+      <span class="badge badge-blue">Segunda a sexta</span>
+      <span class="badge badge-green">14:30</span>
+    </div>
+    <p>Envia uma DM personalizada para cada líder M1 com os resultados do time dele. Inclui NPS do dia e do mês, comparativo com cluster e UV, ranking de Xpeers, detratores e jobs expirados.</p>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><h4>Fonte dos agentes</h4><p>Tabela de hierarquia — atualiza automaticamente todo mês com os liderados ativos do M1.</p></div>
+    <div class="info-card"><h4>Contribuição em p.p.</h4><p>Mede quanto o time do M1 moveu o ponteiro do cluster e de UV — positivo = puxou pra cima, negativo = puxou pra baixo.</p></div>
+  </div>
+
+  <div class="section-title">Mensagem principal — DM do M1</div>
+  <div class="slack-card">
+    <div class="slack-card-header">
+      <div class="bot-avatar">🚀</div>
+      <span class="bot-name">UV Results</span><span class="app-tag">APP</span>
+      <span class="time">14:30</span>
+    </div>
+    <div class="slack-body">
+      <div class="slack-msg-header">🚀 Bip bip! Chegou a nave dos resultados, lider!</div>
+      <p style="font-size:0.875rem;margin-bottom:0.75rem;"><strong>Lider:</strong> M1 | <strong>Cluster:</strong> Relationship</p>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📅 Diário — 18/03/2026</div>
+        <div class="row"><span class="label">Time:</span><span class="val"><span class="dot-green"></span> 91.4 (28 resp)</span></div>
+        <div class="row"><span class="label">Fone:</span><span class="val"><span class="dot-green"></span> 100.0 (5 resp)</span></div>
+        <div class="row"><span class="label">Chat:</span><span class="val"><span class="dot-green"></span> 89.6 (23 resp)</span></div>
+        <br>
+        <p style="font-size:0.875rem;"><strong>Comparativo Geral Diário</strong></p>
+        <p style="font-size:0.875rem;">NPS UV: <span class="dot-green"></span> 91.4 (799 resp)</p>
+        <p style="font-size:0.875rem;">NPS Cluster Relationship: <span class="dot-green"></span> 90.9 (209 resp)</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;">Contribuição do time: +0.8 pp 📈 em UV | +1.2 pp 📈 em Relationship</p>
+      </div>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📊 Mês — March/2026</div>
+        <div class="row"><span class="label">Time:</span><span class="val"><span class="dot-green"></span> 88.2 (527 resp)</span></div>
+        <div class="row"><span class="label">Fone:</span><span class="val"><span class="dot-green"></span> 90.1 (102 resp)</span></div>
+        <div class="row"><span class="label">Chat:</span><span class="val"><span class="dot-green"></span> 88.0 (425 resp)</span></div>
+        <br>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;">Contribuição: -0.3 pp 📉 em UV | +0.5 pp 📈 em Relationship</p>
+      </div>
+      <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o ranking dos Xpeers e os detratores na thread 👇</p>
+    </div>
+  </div>
+
+  <div class="section-title">Threads — detalhes na DM</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">🧑‍💼 Ranking dos Xpeers</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> Xpeer A</span><span class="info">dia: 60.0 | mês: 82.1 | 5 resp | contrib: -1.4 pp 📉</span></div>
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> Xpeer B</span><span class="info">dia: 85.7 | mês: 87.3 | 7 resp | contrib: -0.2 pp 📉</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Xpeer C</span><span class="info">dia: 92.3 | mês: 91.0 | 13 resp | contrib: +0.6 pp 📈</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💥 Detratores — Dia</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 2 det de 2</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> credit_limit_request</span><span class="info">NPS 20.0 | 1 det de 5</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💥 Detratores — Mês</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 8 det de 8</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> bill_payments_doubt</span><span class="info">NPS 20.0 | 4 det de 10</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">🔴 Top Agentes Detratores — Dia</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name">Xpeer A</span><span class="info">NPS -100.0 | 2 det de 5</span></div>
+        <div class="item-row"><span class="name">Xpeer D</span><span class="info">NPS 60.0 | 1 det de 8</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💬 Verbatims Detratores — Dia</div>
+      <div class="thread-item-body">
+        <p><strong>Xpeer A</strong> (nota 2) — <em>Fui mal atendido, o agente não soube resolver meu problema e desligou sem solução.</em></p>
+        <p style="font-size:0.8rem;color:#7c3aed;margin-top:0.3rem;">Ver cliente →</p>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💼 Jobs Expirados — March/2026</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> Xpeer B</span><span class="info">17 exp de 229 (7.4%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Xpeer C</span><span class="info">5 exp de 302 (1.7%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> Xpeer D</span><span class="info">2 exp de 386 (0.5%)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── TAB 2: Leadership M1 Semanal ───── -->
+<div class="bot-page" id="tab-2">
+  <div class="bot-header">
+    <h2>UV Leadership Bot M1 — Semanal</h2>
+    <div class="meta">
+      <span class="badge badge-purple">DM para cada M1</span>
+      <span class="badge badge-orange">Sexta-feira</span>
+      <span class="badge badge-green">16:30</span>
+    </div>
+    <p>Envia toda sexta um resumo da semana anterior para cada M1, com gráfico de evolução de NPS e compilado de motivos de contato com detratores.</p>
+  </div>
+
+  <div class="section-title">Mensagem principal — DM do M1</div>
+  <div class="slack-card">
+    <div class="slack-card-header">
+      <div class="bot-avatar">📆</div>
+      <span class="bot-name">UV Results</span><span class="app-tag">APP</span>
+      <span class="time">16:30</span>
+    </div>
+    <div class="slack-body">
+      <div class="slack-msg-header">📆 Resumo Semanal UV Results</div>
+      <p style="font-size:0.875rem;margin-bottom:0.5rem;"><strong>Lider:</strong> M1 | <strong>Cluster:</strong> Relationship</p>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 17/03 a 21/03/2026</p>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📊 NPS da Semana</div>
+        <div class="row"><span class="dot-green"></span><span class="label">Time:</span><span class="val">90.4 (183 resp)</span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">UV:</span><span class="val">88.8 (3.812 resp)</span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Cluster:</span><span class="val">89.9 (740 resp)</span></div>
+        <br>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;">Time vs UV: +2.4 pp acima | Time vs Cluster: +0.5 pp acima</p>
+      </div>
+      <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o gráfico e os motivos de contato na thread 👇</p>
+    </div>
+  </div>
+
+  <div class="section-title">Threads — detalhes na DM</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">📈 Evolução NPS da Semana — Gráfico</div>
+      <div class="thread-item-body">
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (seg a sex) mostrando:<br>— Linha do time (roxo)<br>— Linha UV (azul tracejado)<br>— Linha do cluster (laranja pontilhado)<br>Valores do time anotados acima de cada ponto.</p>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💥 Motivos de Contato — 17/03 a 21/03</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 8 det de 8 (100%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> credit_limit_request</span><span class="info">NPS 20.0 | 4 det de 10 (40%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> bill_payments_doubt</span><span class="info">NPS 75.0 | 2 det de 12 (16.7%)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── TAB 3: M2 Diário ───── -->
+<div class="bot-page" id="tab-3">
+  <div class="bot-header">
+    <h2>UV M2 Bot — Diário</h2>
+    <div class="meta">
+      <span class="badge badge-purple">DM para cada M2</span>
+      <span class="badge badge-blue">Segunda a sexta</span>
+      <span class="badge badge-green">15:00</span>
+    </div>
+    <p>Envia diariamente uma DM para cada M2 com visão consolidada dos clusters que lidera, seguida de mensagens individuais para cada M1 do time com detalhes completos.</p>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><h4>M2 com múltiplos clusters</h4><p>M2s que lideram mais de um cluster recebem o NPS de cada cluster separado, com contribuição individual.</p></div>
+    <div class="info-card"><h4>Hierarquia automática</h4><p>M2s e seus M1s são carregados automaticamente da tabela de hierarquia — atualiza sozinho todo mês.</p></div>
+  </div>
+
+  <div class="section-title">Mensagem principal — DM do M2</div>
+  <div class="slack-card">
+    <div class="slack-card-header">
+      <div class="bot-avatar">🚀</div>
+      <span class="bot-name">UV Results</span><span class="app-tag">APP</span>
+      <span class="time">15:00</span>
+    </div>
+    <div class="slack-body">
+      <div class="slack-msg-header">🚀 Bip bip! Chegou a nave dos resultados, M2!</div>
+      <p style="font-size:0.875rem;margin-bottom:0.75rem;"><strong>Lider:</strong> M2 | <strong>Clusters:</strong> Financing, Relationship</p>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📅 Diário — 18/03/2026</div>
+        <p style="font-size:0.875rem;"><strong>NPS Geral do M2:</strong> <span class="dot-green"></span> 88.8 <span class="arrow-up">↑ +2.4 pp</span></p>
+        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-red"></span> 74.5 <span class="arrow-down">↓ -21.7 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 74.5 | UV: 91.4)</em></span></div>
+        <div class="row"><span style="font-weight:500;min-width:110px;">Relationship:</span><span><span class="dot-green"></span> 90.9 <span class="arrow-up">↑ +1.2 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 90.9 | UV: 91.4)</em></span></div>
+        <br>
+        <p style="font-size:0.875rem;"><strong>NPS UV:</strong> <span class="dot-green"></span> 91.4 (799 resp)</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:<br>-1.2 pp 📉 em Financing | +0.3 pp 📈 em Relationship | -0.7 pp 📉 em UV</p>
+      </div>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📊 Mês — March/2026</div>
+        <p style="font-size:0.875rem;"><strong>NPS Geral do M2:</strong> <span class="dot-green"></span> 88.8</p>
+        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-yellow"></span> 86.5 <em style="color:#888;font-size:0.8rem;">(cluster: 86.5 | UV: 88.8)</em></span></div>
+        <div class="row"><span style="font-weight:500;min-width:110px;">Relationship:</span><span><span class="dot-green"></span> 89.9 <em style="color:#888;font-size:0.8rem;">(cluster: 90.0 | UV: 88.8)</em></span></div>
+        <br>
+        <p style="font-size:0.875rem;"><strong>NPS UV:</strong> <span class="dot-green"></span> 88.8 (12.564 resp)</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:<br>-0.2 pp 📉 em Financing | +0.5 pp 📈 em Relationship | +0.02 pp 📈 em UV</p>
+      </div>
+      <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Panorama geral e detalhes por M1 na thread 👇</p>
+    </div>
+  </div>
+
+  <div class="section-title">Thread panorama geral</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">🧭 Panorama Geral — 18/03/2026</div>
+      <div class="thread-item-body">
+        <p style="margin-bottom:0.5rem;"><strong>🏆 Ranking dos M1s (pior → melhor NPS do dia)</strong></p>
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> M1-A</span><span class="info">dia: 85.7 | mês: 87.1 | -0.3 pp vs UV</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> M1-B</span><span class="info">dia: 90.9 | mês: 89.4 | +0.2 pp vs UV</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> M1-C</span><span class="info">dia: 93.8 | mês: 90.6 | +0.4 pp vs UV</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">📈 Gráfico NPS do Dia por M1</div>
+      <div class="thread-item-body">
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de barras com NPS do dia de cada M1, com linhas de referência para cada cluster e UV.</p>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💥 Top Detratores — Dia e Mês</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 5 det de 5</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> credit_limit_request</span><span class="info">NPS 20.0 | 3 det de 8</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💼 Top Job Squads por Cluster</div>
+      <div class="thread-item-body">
+        <p><strong>Financing:</strong></p>
+        <div class="item-row"><span class="name">financing_credit</span><span class="info">42 atendimentos</span></div>
+        <p style="margin-top:0.5rem;"><strong>Relationship:</strong></p>
+        <div class="item-row"><span class="name">relationship_general</span><span class="info">38 atendimentos</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:1.5rem;">Mensagens individuais por M1 (na DM)</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">👤 M1-A — Financing <span style="font-size:0.7rem;color:#888;margin-left:0.5rem;">mensagem independente</span></div>
+      <div class="thread-item-body">
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Clique na thread desta mensagem para ver os detalhes completos do M1 👇</p>
+        <br>
+        <p><strong>Na thread:</strong></p>
+        <div class="item-row"><span class="name">NPS dia + mês por canal</span><span class="info">Fone e Chat separados</span></div>
+        <div class="item-row"><span class="name">Contribuição em p.p.</span><span class="info">Vs cluster e UV (dia e mês)</span></div>
+        <div class="item-row"><span class="name">Detratores</span><span class="info">Dia e mês por submotivo</span></div>
+        <div class="item-row"><span class="name">Top agentes detratores</span><span class="info">Dia e mês</span></div>
+        <div class="item-row"><span class="name">Verbatims</span><span class="info">Com nota e link do cliente</span></div>
+        <div class="item-row"><span class="name">Jobs Expirados</span><span class="info">% do mês por agente</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── TAB 4: M2 Semanal ───── -->
+<div class="bot-page" id="tab-4">
+  <div class="bot-header">
+    <h2>UV M2 Bot — Semanal</h2>
+    <div class="meta">
+      <span class="badge badge-purple">DM para cada M2</span>
+      <span class="badge badge-orange">Segunda-feira</span>
+      <span class="badge badge-green">Em construção</span>
+    </div>
+    <p>Envia toda segunda um resumo da semana anterior para cada M2, com gráfico de evolução de NPS de todos os M1s e compilado de motivos de contato.</p>
+  </div>
+
+  <div class="section-title">Mensagem principal — DM do M2</div>
+  <div class="slack-card">
+    <div class="slack-card-header">
+      <div class="bot-avatar">📆</div>
+      <span class="bot-name">UV Results</span><span class="app-tag">APP</span>
+      <span class="time">Segunda-feira</span>
+    </div>
+    <div class="slack-body">
+      <div class="slack-msg-header">📆 Resumo Semanal UV Results — M2</div>
+      <p style="font-size:0.875rem;margin-bottom:0.5rem;"><strong>Lider:</strong> M2 | <strong>Clusters:</strong> Investments, Security</p>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 17/03 a 21/03/2026</p>
+      <hr class="slack-divider">
+      <div class="slack-section">
+        <div class="slack-label">📊 NPS da Semana</div>
+        <div class="row"><span class="dot-green"></span><span class="label">NPS M2:</span><span class="val">90.2 (612 resp)</span></div>
+        <br>
+        <div class="row"><span class="dot-yellow"></span><span class="label">Investments:</span><span class="val">84.9 (279 resp) <em style="color:#888;font-size:0.8rem;">-0.3 pp vs M2</em></span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Security:</span><span class="val">92.1 (333 resp) <em style="color:#888;font-size:0.8rem;">+1.9 pp vs M2</em></span></div>
+        <br>
+        <div class="row"><span class="dot-green"></span><span class="label">NPS UV:</span><span class="val">88.8 (3.812 resp)</span></div>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Time vs UV: +1.4 pp acima</p>
+      </div>
+      <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o gráfico e os motivos na thread 👇</p>
+    </div>
+  </div>
+
+  <div class="section-title">Threads — detalhes na DM</div>
+  <div class="thread-container">
+    <div class="thread-item">
+      <div class="thread-item-header">📈 Evolução NPS Semanal por M1 — Gráfico</div>
+      <div class="thread-item-body">
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (seg a sex) de cada M1 do time do M2:<br>— Uma linha colorida por M1<br>— Linha UV (azul tracejado) como benchmark<br>Fundo escuro com zonas de cor (verde ≥88, amarelo ≥84).</p>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💥 Motivos de Contato — 17/03 a 21/03</div>
+      <div class="thread-item-body">
+        <p style="font-size:0.8rem;color:#888;margin-bottom:0.5rem;">Agregado de todos os clusters do M2</p>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 12 det de 12 (100%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> investments_equities</span><span class="info">NPS -100.0 | 8 det de 8 (100%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> credit_limit_request</span><span class="info">NPS 75.0 | 5 det de 20 (25%)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.bot-page').forEach((p,j) => p.classList.toggle('active', i===j));
+  document.querySelectorAll('#nav button').forEach((b,j) => b.classList.toggle('active', i===j));
+}
+</script>
+</body>
+</html>
