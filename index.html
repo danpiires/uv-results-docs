@@ -8,9 +8,23 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; }
 
-  header { background: #7c3aed; color: white; padding: 2rem; }
-  header h1 { font-size: 1.6rem; font-weight: 600; }
-  header p { font-size: 0.95rem; opacity: 0.85; margin-top: 0.4rem; }
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: white; padding: 3rem 2rem; text-align: center; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .hero p { font-size: 1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
+  .hero-cards { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .hero-card { background: rgba(255,255,255,0.12); border-radius: 12px; padding: 1rem 1.25rem; min-width: 160px; text-align: center; }
+  .hero-card .icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+  .hero-card .label { font-size: 0.8rem; opacity: 0.85; line-height: 1.4; }
+  .cadencia { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem 1.5rem; max-width: 640px; margin: 0 auto; text-align: left; }
+  .cadencia h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-bottom: 0.75rem; }
+  .cadencia-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; font-size: 0.875rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .cadencia-item:last-child { border-bottom: none; }
+  .cadencia-item .time { font-weight: 700; min-width: 55px; opacity: 0.9; }
+  .cadencia-item .freq { opacity: 0.65; font-size: 0.78rem; min-width: 110px; }
+
+  header { background: #7c3aed; color: white; padding: 1.5rem 2rem; }
+  header h1 { font-size: 1.4rem; font-weight: 600; }
 
   nav { background: white; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
   nav button { background: none; border: none; padding: 1rem 1.2rem; font-size: 0.875rem; color: #666; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
@@ -63,11 +77,6 @@
   .thread-item-body .item-row .name { font-weight: 500; }
   .thread-item-body .item-row .info { color: #666; font-size: 0.82rem; }
 
-  .collapse-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.5rem 0.75rem; font-size: 0.8rem; color: #7c3aed; cursor: pointer; font-weight: 500; }
-  .collapse-btn:hover { background: #f5f0ff; }
-  .collapsible { display: none; }
-  .collapsible.open { display: block; }
-
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
   @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
   .info-card { background: white; border-radius: 10px; border: 1px solid #e5e5e5; padding: 1rem; }
@@ -79,8 +88,6 @@
 
   .arrow-up { color: #22c55e; font-weight: 600; }
   .arrow-down { color: #ef4444; font-weight: 600; }
-  .arrow-neutral { color: #888; }
-  .tag-thread { font-size: 0.7rem; background: #ede9fe; color: #5b21b6; padding: 2px 7px; border-radius: 10px; font-weight: 500; }
 
   .help-wrap { display: inline-block; position: relative; }
   .help-btn { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: #e5e5e5; color: #666; font-size: 10px; font-weight: 600; cursor: pointer; border: none; line-height: 1; margin-left: 4px; vertical-align: middle; }
@@ -92,10 +99,25 @@
 </head>
 <body>
 
-<header>
-  <h1>🚀 UV Results Bots — Documentação</h1>
-  <p>Guia completo de todas as visões enviadas automaticamente pelo UV Results no Slack</p>
-</header>
+<!-- HERO -->
+<div class="hero">
+  <h1>🚀 UV Results Bots</h1>
+  <p>Uma suite completa de bots que entrega os resultados de NPS diretamente no Slack — com rapidez, clareza e o nível de detalhe certo para cada liderança agir.</p>
+  <div class="hero-cards">
+    <div class="hero-card"><div class="icon">⚡</div><div class="label">Atualização mais rápida que o dashboard</div></div>
+    <div class="hero-card"><div class="icon">🎯</div><div class="label">Visibilidade imediata para atuação rápida</div></div>
+    <div class="hero-card"><div class="icon">📊</div><div class="label">Análise fácil sem abrir nenhuma ferramenta</div></div>
+    <div class="hero-card"><div class="icon">🔔</div><div class="label">Proatividade — o resultado chega até você</div></div>
+  </div>
+  <div class="cadencia">
+    <h3>Cadência de envio</h3>
+    <div class="cadencia-item"><span class="time">11:00</span><span class="freq">Seg a Sex</span><span>UV Results Bot — canal da liderança</span></div>
+    <div class="cadencia-item"><span class="time">14:30</span><span class="freq">Seg a Sex</span><span>Leadership Bot M1 — DM por líder</span></div>
+    <div class="cadencia-item"><span class="time">15:00</span><span class="freq">Seg a Sex</span><span>M2 Bot — DM por M2</span></div>
+    <div class="cadencia-item"><span class="time">16:30</span><span class="freq">Segunda-feira</span><span>Leadership Bot Semanal M1 — DM por líder</span></div>
+    <div class="cadencia-item"><span class="time">—</span><span class="freq">Em breve</span><span>M2 Bot Semanal — DM por M2</span></div>
+  </div>
+</div>
 
 <nav id="nav">
   <button class="active" onclick="showTab(0)">UV Results Geral</button>
@@ -107,7 +129,7 @@
 
 <main>
 
-<!-- ───── TAB 0: UV Results Geral ───── -->
+<!-- TAB 0: UV Results Geral -->
 <div class="bot-page active" id="tab-0">
   <div class="bot-header">
     <h2>UV Results Bot — Visão Geral</h2>
@@ -196,10 +218,19 @@
         <div class="item-row"><span class="name">Total atendimentos</span><span class="info">761</span></div>
       </div>
     </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💬 Verbatims Detratores</div>
+      <div class="thread-item-body">
+        <p style="margin-bottom:0.5rem;"><strong>Xpeer A</strong> (nota 1) — <em>Péssimo atendimento, o agente ficou em silêncio por mais de 5 minutos sem me dar retorno algum.</em></p>
+        <p style="font-size:0.8rem;color:#7c3aed;margin-bottom:0.75rem;">Ver cliente →</p>
+        <p style="margin-bottom:0.5rem;"><strong>Xpeer B</strong> (nota 3) — <em>Não resolveram meu problema, me transferiram três vezes e ninguém soube me ajudar.</em></p>
+        <p style="font-size:0.8rem;color:#7c3aed;">Ver cliente →</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ───── TAB 1: Leadership M1 Diário ───── -->
+<!-- TAB 1: Leadership M1 Diário -->
 <div class="bot-page" id="tab-1">
   <div class="bot-header">
     <h2>UV Leadership Bot M1 — Diário</h2>
@@ -242,7 +273,7 @@
       </div>
       <hr class="slack-divider">
       <div class="slack-section">
-        <div class="slack-label">📊 Mês — March/2026</div>
+        <div class="slack-label">📊 Mês — março/2026</div>
         <div class="row"><span class="label">Time:</span><span class="val"><span class="dot-green"></span> 88.2 (527 resp)</span></div>
         <div class="row"><span class="label">Fone:</span><span class="val"><span class="dot-green"></span> 90.1 (102 resp)</span></div>
         <div class="row"><span class="label">Chat:</span><span class="val"><span class="dot-green"></span> 88.0 (425 resp)</span></div>
@@ -292,7 +323,7 @@
       </div>
     </div>
     <div class="thread-item">
-      <div class="thread-item-header">💼 Jobs Expirados — March/2026</div>
+      <div class="thread-item-header">💼 Jobs Expirados — março/2026</div>
       <div class="thread-item-body">
         <div class="item-row"><span class="name"><span class="dot-yellow"></span> Xpeer B</span><span class="info">17 exp de 229 (7.4%)</span></div>
         <div class="item-row"><span class="name"><span class="dot-green"></span> Xpeer C</span><span class="info">5 exp de 302 (1.7%)</span></div>
@@ -302,16 +333,16 @@
   </div>
 </div>
 
-<!-- ───── TAB 2: Leadership M1 Semanal ───── -->
+<!-- TAB 2: Leadership M1 Semanal -->
 <div class="bot-page" id="tab-2">
   <div class="bot-header">
     <h2>UV Leadership Bot M1 — Semanal</h2>
     <div class="meta">
       <span class="badge badge-purple">DM para cada M1</span>
-      <span class="badge badge-orange">Sexta-feira</span>
+      <span class="badge badge-orange">Segunda-feira</span>
       <span class="badge badge-green">16:30</span>
     </div>
-    <p>Envia toda sexta um resumo da semana anterior para cada M1, com gráfico de evolução de NPS e compilado de motivos de contato com detratores.</p>
+    <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M1, com gráfico de evolução de NPS e compilado de motivos de contato com detratores.</p>
   </div>
 
   <div class="section-title">Mensagem principal — DM do M1</div>
@@ -324,7 +355,7 @@
     <div class="slack-body">
       <div class="slack-msg-header">📆 Resumo Semanal UV Results</div>
       <p style="font-size:0.875rem;margin-bottom:0.5rem;"><strong>Lider:</strong> M1 | <strong>Cluster:</strong> Relationship</p>
-      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 17/03 a 21/03/2026</p>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 08/03 a 14/03/2026</p>
       <hr class="slack-divider">
       <div class="slack-section">
         <div class="slack-label">📊 NPS da Semana</div>
@@ -343,11 +374,13 @@
     <div class="thread-item">
       <div class="thread-item-header">📈 Evolução NPS da Semana — Gráfico</div>
       <div class="thread-item-body">
-        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (seg a sex) mostrando:<br>— Linha do time (roxo)<br>— Linha UV (azul tracejado)<br>— Linha do cluster (laranja pontilhado)<br>Valores do time anotados acima de cada ponto.</p>
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (dom a sab) mostrando:<br>— Linha do time (roxo)<br>— Linha UV (azul tracejado)<br>— Linha do cluster (laranja pontilhado)<br>Valores do time anotados acima de cada ponto.</p>
       </div>
     </div>
     <div class="thread-item">
-      <div class="thread-item-header">💥 Motivos de Contato — 17/03 a 21/03</div>
+      <div class="thread-item-header">💥 Motivos de Contato — 08/03 a 14/03
+        <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Ordenado por volume de detratores (do maior para o menor). Em caso de empate, ordena pelo pior NPS.</span></span>
+      </div>
       <div class="thread-item-body">
         <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 8 det de 8 (100%)</span></div>
         <div class="item-row"><span class="name"><span class="dot-red"></span> credit_limit_request</span><span class="info">NPS 20.0 | 4 det de 10 (40%)</span></div>
@@ -357,7 +390,7 @@
   </div>
 </div>
 
-<!-- ───── TAB 3: M2 Diário ───── -->
+<!-- TAB 3: M2 Diário -->
 <div class="bot-page" id="tab-3">
   <div class="bot-header">
     <h2>UV M2 Bot — Diário</h2>
@@ -391,25 +424,25 @@
           <span class="arrow-up">↑ +2.4 pp</span>
           <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Variação vs dia anterior. ↑ = melhorou em relação a ontem. ↓ = piorou. O valor é a diferença em pontos percentuais de NPS.</span></span>
         </p>
-        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-red"></span> 74.5 <span class="arrow-down">↓ -21.7 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 74.5 | UV: 91.4)</em>
-          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">NPS dos M1s do M2 nesse cluster. Entre parênteses: benchmark do cluster inteiro e de UV no mesmo dia.</span></span>
+        <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-red"></span> 74.5 <span class="arrow-up">↑ +14.3 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 74.5 | UV: 91.4)</em>
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">NPS dos M1s do M2 nesse cluster. Entre parênteses: NPS geral do cluster inteiro e de UV no mesmo dia.</span></span>
         </span></div>
         <div class="row"><span style="font-weight:500;min-width:110px;">Relationship:</span><span><span class="dot-green"></span> 90.9 <span class="arrow-up">↑ +1.2 pp</span> <em style="color:#888;font-size:0.8rem;">(cluster: 90.9 | UV: 91.4)</em></span></div>
         <br>
         <p style="font-size:0.875rem;"><strong>NPS UV:</strong> <span class="dot-green"></span> 91.4 (799 resp)</p>
         <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:
-          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Contribuição em p.p.: quanto o time do M2 moveu o NPS do cluster/UV. Positivo = puxou pra cima. Negativo = puxou pra baixo. Calculado removendo o time do resultado e comparando com e sem.</span></span>
-          <br>-1.2 pp 📉 em Financing | +0.3 pp 📈 em Relationship | -0.7 pp 📉 em UV</p>
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Contribuição em p.p.: quanto o time do M2 moveu o NPS do cluster/UV. Positivo = puxou pra cima. Negativo = puxou pra baixo.</span></span>
+          <br>> -1.2 pp 📉 em Financing<br>> +0.3 pp 📈 em Relationship<br>> -0.7 pp 📉 em UV</p>
       </div>
       <hr class="slack-divider">
       <div class="slack-section">
-        <div class="slack-label">📊 Mês — March/2026</div>
+        <div class="slack-label">📊 Mês — março/2026</div>
         <p style="font-size:0.875rem;"><strong>NPS Geral do M2:</strong> <span class="dot-green"></span> 88.8</p>
         <div class="row" style="margin-top:0.5rem;"><span style="font-weight:500;min-width:110px;">Financing:</span><span><span class="dot-yellow"></span> 86.5 <em style="color:#888;font-size:0.8rem;">(cluster: 86.5 | UV: 88.8)</em></span></div>
         <div class="row"><span style="font-weight:500;min-width:110px;">Relationship:</span><span><span class="dot-green"></span> 89.9 <em style="color:#888;font-size:0.8rem;">(cluster: 90.0 | UV: 88.8)</em></span></div>
         <br>
         <p style="font-size:0.875rem;"><strong>NPS UV:</strong> <span class="dot-green"></span> 88.8 (12.564 resp)</p>
-        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:<br>-0.2 pp 📉 em Financing | +0.5 pp 📈 em Relationship | +0.02 pp 📈 em UV</p>
+        <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Contribuição:<br>> -0.2 pp 📉 em Financing<br>> +0.5 pp 📈 em Relationship<br>> +0.02 pp 📈 em UV</p>
       </div>
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Panorama geral e detalhes por M1 na thread 👇</p>
     </div>
@@ -469,7 +502,7 @@
   </div>
 </div>
 
-<!-- ───── TAB 4: M2 Semanal ───── -->
+<!-- TAB 4: M2 Semanal -->
 <div class="bot-page" id="tab-4">
   <div class="bot-header">
     <h2>UV M2 Bot — Semanal</h2>
@@ -478,7 +511,7 @@
       <span class="badge badge-orange">Segunda-feira</span>
       <span class="badge badge-green">Em construção</span>
     </div>
-    <p>Envia toda segunda um resumo da semana anterior para cada M2, com gráfico de evolução de NPS de todos os M1s e compilado de motivos de contato.</p>
+    <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M2, com gráfico de evolução de NPS de todos os M1s e compilado de motivos de contato.</p>
   </div>
 
   <div class="section-title">Mensagem principal — DM do M2</div>
@@ -491,13 +524,15 @@
     <div class="slack-body">
       <div class="slack-msg-header">📆 Resumo Semanal UV Results — M2</div>
       <p style="font-size:0.875rem;margin-bottom:0.5rem;"><strong>Lider:</strong> M2 | <strong>Clusters:</strong> Investments, Security</p>
-      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 17/03 a 21/03/2026</p>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:0.75rem;font-style:italic;">Semana: 08/03 a 14/03/2026</p>
       <hr class="slack-divider">
       <div class="slack-section">
         <div class="slack-label">📊 NPS da Semana</div>
         <div class="row"><span class="dot-green"></span><span class="label">NPS M2:</span><span class="val">90.2 (612 resp)</span></div>
         <br>
-        <div class="row"><span class="dot-yellow"></span><span class="label">Investments:</span><span class="val">84.9 (279 resp) <em style="color:#888;font-size:0.8rem;">-0.3 pp vs M2</em></span></div>
+        <div class="row"><span class="dot-yellow"></span><span class="label">Investments:</span><span class="val">84.9 (279 resp) <em style="color:#888;font-size:0.8rem;">-0.3 pp vs M2
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Diferença entre o NPS desse cluster (com os M1s do M2) e o NPS geral do M2. Negativo = esse cluster está puxando o resultado do M2 para baixo.</span></span>
+        </em></span></div>
         <div class="row"><span class="dot-green"></span><span class="label">Security:</span><span class="val">92.1 (333 resp) <em style="color:#888;font-size:0.8rem;">+1.9 pp vs M2</em></span></div>
         <br>
         <div class="row"><span class="dot-green"></span><span class="label">NPS UV:</span><span class="val">88.8 (3.812 resp)</span></div>
@@ -512,11 +547,13 @@
     <div class="thread-item">
       <div class="thread-item-header">📈 Evolução NPS Semanal por M1 — Gráfico</div>
       <div class="thread-item-body">
-        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (seg a sex) de cada M1 do time do M2:<br>— Uma linha colorida por M1<br>— Linha UV (azul tracejado) como benchmark<br>Fundo escuro com zonas de cor (verde ≥88, amarelo ≥84).</p>
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (dom a sab) de cada M1 do time do M2:<br>— Uma linha colorida por M1<br>— Linha UV (azul tracejado) como benchmark<br>Fundo escuro com zonas de cor (verde ≥88, amarelo ≥84).</p>
       </div>
     </div>
     <div class="thread-item">
-      <div class="thread-item-header">💥 Motivos de Contato — 17/03 a 21/03</div>
+      <div class="thread-item-header">💥 Motivos de Contato — 08/03 a 14/03
+        <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Ordenado por volume de detratores (do maior para o menor). Em caso de empate, ordena pelo pior NPS.</span></span>
+      </div>
       <div class="thread-item-body">
         <p style="font-size:0.8rem;color:#888;margin-bottom:0.5rem;">Agregado de todos os clusters do M2</p>
         <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 12 det de 12 (100%)</span></div>
