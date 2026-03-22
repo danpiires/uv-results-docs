@@ -182,7 +182,7 @@
       </button>
       <button class="bot-nav-btn" onclick="showTab(5)">
         <span class="bn-icon">📈</span>
-        <span class="bn-text"><div class="bn-title">M2 Semanal</div><div class="bn-sub">DM por M2 · Segunda · Em breve</div></span>
+        <span class="bn-text"><div class="bn-title">M2 Semanal</div><div class="bn-sub">DM por M2 · Segunda · 16:00</div></span>
       </button>
     </div>
   </div>
@@ -561,9 +561,9 @@
     <div class="meta">
       <span class="badge badge-purple">DM para cada M2</span>
       <span class="badge badge-orange">Segunda-feira</span>
-      <span class="badge badge-green">Em construção</span>
+      <span class="badge badge-green">16:00</span>
     </div>
-    <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M2, com gráfico de evolução de NPS de todos os M1s e compilado de motivos de contato.</p>
+    <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M2, com ranking dos M1s, gráfico de evolução de NPS, top agentes detratores, motivos de contato, jobs expirados por M1 e verbatims da semana.</p>
   </div>
   <div class="section-title">Mensagem principal — DM do M2</div>
   <div class="slack-card">
@@ -581,10 +581,10 @@
         <div class="slack-label">📊 NPS da Semana</div>
         <div class="row"><span class="dot-green"></span><span class="label">NPS M2:</span><span class="val">90.2 (612 resp)</span></div>
         <br>
-        <div class="row"><span class="dot-yellow"></span><span class="label">Investments:</span><span class="val">84.9 (279 resp) <em style="color:#888;font-size:0.8rem;">-0.3 pp vs M2
-          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Diferença entre o NPS desse cluster (com os M1s do M2) e o NPS geral do M2. Negativo = esse cluster está puxando o resultado do M2 para baixo.</span></span>
+        <div class="row"><span class="dot-yellow"></span><span class="label">Investments:</span><span class="val">84.9 (279 resp) <em style="color:#888;font-size:0.8rem;">contrib: -0.3 pp 📉  (cluster: 87.9 | UV: 89.4)
+          <span class="help-wrap"><button class="help-btn" onclick="toggleHelp(this)">?</button><span class="help-balloon">Contribuição em p.p.: quanto os M1s do M2 nesse cluster impactaram no resultado geral do cluster inteiro. Positivo = puxou pra cima. Negativo = puxou pra baixo.</span></span>
         </em></span></div>
-        <div class="row"><span class="dot-green"></span><span class="label">Security:</span><span class="val">92.1 (333 resp) <em style="color:#888;font-size:0.8rem;">+1.9 pp vs M2</em></span></div>
+        <div class="row"><span class="dot-green"></span><span class="label">Security:</span><span class="val">92.1 (333 resp) <em style="color:#888;font-size:0.8rem;">contrib: +1.9 pp 📈  (cluster: 93.1 | UV: 89.4)</em></span></div>
         <br>
         <div class="row"><span class="dot-green"></span><span class="label">NPS UV:</span><span class="val">88.8 (3.812 resp)</span></div>
         <p style="font-size:0.875rem;color:#666;font-style:italic;margin-top:0.3rem;">Time vs UV: +1.4 pp acima</p>
@@ -595,9 +595,26 @@
   <div class="section-title">Threads — detalhes na DM</div>
   <div class="thread-container">
     <div class="thread-item">
+      <div class="thread-item-header">🏆 Ranking dos M1s — Semana</div>
+      <div class="thread-item-body">
+        <p style="color:#888;font-style:italic;font-size:0.85rem;">Pior → melhor NPS da semana, com contribuição em p.p. vs UV.</p>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> M1-A</span><span class="info">NPS 80.0 (130 resp) | contrib UV: -0.5 pp 📉</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> M1-B</span><span class="info">NPS 88.6 (105 resp) | contrib UV: -0.0 pp</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> M1-C</span><span class="info">NPS 92.0 (75 resp) | contrib UV: +0.1 pp 📈</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
       <div class="thread-item-header">📈 Evolução NPS Semanal por M1 — Gráfico</div>
       <div class="thread-item-body">
         <p style="color:#888;font-style:italic;font-size:0.85rem;">Gráfico de linha com evolução diária (dom a sab) de cada M1 do time do M2:<br>— Uma linha colorida por M1<br>— Linha UV (azul tracejado) como benchmark<br>Fundo escuro com zonas de cor (verde ≥88, amarelo ≥84).</p>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">🔴 Top Agentes Detratores — 08/03 a 14/03</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> Xpeer A</span><span class="info">NPS 58.3 | 4 det de 24</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> Xpeer B</span><span class="info">NPS 66.7 | 2 det de 15</span></div>
+        <div class="item-row"><span class="name"><span class="dot-red"></span> Xpeer C</span><span class="info">NPS 75.0 | 1 det de 8</span></div>
       </div>
     </div>
     <div class="thread-item">
@@ -609,6 +626,23 @@
         <div class="item-row"><span class="name"><span class="dot-red"></span> defense_bacen_jud</span><span class="info">NPS -100.0 | 12 det de 12 (100%)</span></div>
         <div class="item-row"><span class="name"><span class="dot-red"></span> investments_equities</span><span class="info">NPS -100.0 | 8 det de 8 (100%)</span></div>
         <div class="item-row"><span class="name"><span class="dot-yellow"></span> credit_limit_request</span><span class="info">NPS 75.0 | 5 det de 20 (25%)</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💼 Jobs Expirados por M1 — 08/03 a 14/03</div>
+      <div class="thread-item-body">
+        <div class="item-row"><span class="name"><span class="dot-red"></span> M1-A</span><span class="info">28 exp de 210 (13.3%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-yellow"></span> M1-B</span><span class="info">12 exp de 180 (6.7%)</span></div>
+        <div class="item-row"><span class="name"><span class="dot-green"></span> M1-C</span><span class="info">3 exp de 245 (1.2%)</span></div>
+      </div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-item-header">💬 Verbatims Detratores — 08/03 a 14/03</div>
+      <div class="thread-item-body">
+        <p style="margin-bottom:0.5rem;"><strong>Xpeer A</strong> (nota 1) — <em>Entrei em contato para resolver um problema com meu cartão bloqueado e o atendente não soube me explicar o motivo do bloqueio nem como resolver.</em></p>
+        <p style="font-size:0.8rem;color:#7c3aed;margin-bottom:0.75rem;">Ver cliente →</p>
+        <p style="margin-bottom:0.5rem;"><strong>Xpeer B</strong> (nota 2) — <em>Fui transferido três vezes e ninguém conseguiu resolver minha dúvida sobre investimentos.</em></p>
+        <p style="font-size:0.8rem;color:#7c3aed;">Ver cliente →</p>
       </div>
     </div>
   </div>
