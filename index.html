@@ -8,37 +8,49 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; }
 
-  /* HERO */
-  .hero { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: white; padding: 3rem 2rem; text-align: center; }
-  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .hero p { font-size: 1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
-  .hero-cards { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
-  .hero-card { background: rgba(255,255,255,0.12); border-radius: 12px; padding: 1rem 1.25rem; min-width: 160px; text-align: center; }
-  .hero-card .icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
-  .hero-card .label { font-size: 0.8rem; opacity: 0.85; line-height: 1.4; }
-  .cadencia { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem 1.5rem; max-width: 640px; margin: 0 auto; text-align: left; }
-  .cadencia h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-bottom: 0.75rem; }
-  .cadencia-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; font-size: 0.875rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .cadencia-item:last-child { border-bottom: none; }
-  .cadencia-item .time { font-weight: 700; min-width: 55px; opacity: 0.9; }
-  .cadencia-item .freq { opacity: 0.65; font-size: 0.78rem; min-width: 110px; }
-
-  header { background: #7c3aed; color: white; padding: 1.5rem 2rem; }
-  header h1 { font-size: 1.4rem; font-weight: 600; }
-
-  nav { background: white; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
-  nav button { background: none; border: none; padding: 1rem 1.2rem; font-size: 0.875rem; color: #666; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
-  nav button.active { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 500; }
+  /* NAV */
+  nav { background: white; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; position: sticky; top: 0; z-index: 50; }
+  nav button { background: none; border: none; padding: 1rem 1.2rem; font-size: 0.875rem; color: #666; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.15s; }
+  nav button.active { color: #7c3aed; border-bottom-color: #7c3aed; font-weight: 600; }
   nav button:hover { color: #7c3aed; }
 
   main { max-width: 860px; margin: 0 auto; padding: 2rem; }
-
   .bot-page { display: none; }
   .bot-page.active { display: block; }
 
+  /* HERO PAGE */
+  .hero-page { background: linear-gradient(160deg, #7c3aed 0%, #4f46e5 100%); border-radius: 16px; padding: 3rem 2rem 2.5rem; color: white; margin-bottom: 2rem; text-align: center; }
+  .hero-page h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.6rem; }
+  .hero-page .subtitle { font-size: 1rem; opacity: 0.85; max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  .value-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 580px; margin: 0 auto 2.5rem; }
+  @media (max-width: 500px) { .value-cards { grid-template-columns: 1fr; } }
+  .value-card { background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 1.1rem 1.2rem; text-align: left; }
+  .value-card .vc-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .value-card .vc-title { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .value-card .vc-desc { font-size: 0.78rem; opacity: 0.8; line-height: 1.5; }
+
+  .cadencia-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 1.5rem; max-width: 580px; margin: 0 auto 2.5rem; text-align: left; }
+  .cadencia-box h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.65; margin-bottom: 1rem; }
+  .cad-row { display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.875rem; }
+  .cad-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .cad-time { font-weight: 700; min-width: 48px; }
+  .cad-freq { opacity: 0.6; font-size: 0.75rem; min-width: 100px; }
+  .cad-name { opacity: 0.9; }
+
+  .bot-nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; max-width: 580px; margin: 0 auto; }
+  @media (max-width: 500px) { .bot-nav-grid { grid-template-columns: 1fr; } }
+  .bot-nav-btn { background: white; color: #5b21b6; border: none; border-radius: 12px; padding: 1rem 1.25rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: all 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .bot-nav-btn:hover { background: #ede9fe; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+  .bot-nav-btn .bn-icon { font-size: 1.2rem; }
+  .bot-nav-btn .bn-text { text-align: left; }
+  .bot-nav-btn .bn-title { font-size: 0.875rem; font-weight: 700; color: #5b21b6; }
+  .bot-nav-btn .bn-sub { font-size: 0.72rem; color: #888; font-weight: 400; margin-top: 1px; }
+
+  /* BOT PAGES */
   .bot-header { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #e5e5e5; }
   .bot-header h2 { font-size: 1.2rem; font-weight: 600; color: #1a1a1a; }
-  .bot-header .meta { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+  .bot-header .meta { display: flex; gap: 0.75rem; margin-top: 0.75rem; flex-wrap: wrap; }
   .badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
   .badge-purple { background: #ede9fe; color: #5b21b6; }
   .badge-blue { background: #dbeafe; color: #1e40af; }
@@ -54,7 +66,6 @@
   .slack-card-header .bot-name { font-weight: 600; font-size: 0.875rem; }
   .slack-card-header .app-tag { font-size: 0.65rem; background: #e5e5e5; color: #666; padding: 1px 5px; border-radius: 3px; margin-left: 2px; }
   .slack-card-header .time { font-size: 0.75rem; color: #999; margin-left: auto; }
-
   .slack-body { padding: 1rem; }
   .slack-msg-header { font-weight: 700; font-size: 1rem; margin-bottom: 0.75rem; }
   .slack-divider { border: none; border-top: 1px solid #e5e5e5; margin: 0.75rem 0; }
@@ -64,6 +75,7 @@
   .slack-section .row { display: flex; gap: 0.5rem; align-items: center; margin: 0.2rem 0; font-size: 0.875rem; }
   .slack-section .row .label { color: #666; min-width: 80px; }
   .slack-section .row .val { font-weight: 500; }
+
   .dot-green { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #22c55e; margin-right: 4px; }
   .dot-yellow { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #eab308; margin-right: 4px; }
   .dot-red { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; margin-right: 4px; }
@@ -95,42 +107,90 @@
   .help-balloon { display: none; position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(100% + 8px); background: #1a1a1a; color: white; font-size: 0.78rem; line-height: 1.5; padding: 8px 12px; border-radius: 8px; width: 220px; z-index: 100; pointer-events: none; }
   .help-balloon::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #1a1a1a; }
   .help-wrap.open .help-balloon { display: block; }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #ede9fe; color: #5b21b6; border: none; border-radius: 8px; padding: 0.4rem 0.9rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-bottom: 1.25rem; transition: background 0.15s; }
+  .back-btn:hover { background: #ddd6fe; }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>🚀 UV Results Bots</h1>
-  <p>Uma suite completa de bots que entrega os resultados de NPS diretamente no Slack — com rapidez, clareza e o nível de detalhe certo para cada liderança agir.</p>
-  <div class="hero-cards">
-    <div class="hero-card"><div class="icon">⚡</div><div class="label">Atualização mais rápida que o dashboard</div></div>
-    <div class="hero-card"><div class="icon">🎯</div><div class="label">Visibilidade imediata para atuação rápida</div></div>
-    <div class="hero-card"><div class="icon">📊</div><div class="label">Análise fácil sem abrir nenhuma ferramenta</div></div>
-    <div class="hero-card"><div class="icon">🔔</div><div class="label">Proatividade — o resultado chega até você</div></div>
-  </div>
-  <div class="cadencia">
-    <h3>Cadência de envio</h3>
-    <div class="cadencia-item"><span class="time">11:00</span><span class="freq">Seg a Sex</span><span>UV Results Bot — canal da liderança</span></div>
-    <div class="cadencia-item"><span class="time">14:30</span><span class="freq">Seg a Sex</span><span>Leadership Bot M1 — DM por líder</span></div>
-    <div class="cadencia-item"><span class="time">15:00</span><span class="freq">Seg a Sex</span><span>M2 Bot — DM por M2</span></div>
-    <div class="cadencia-item"><span class="time">16:30</span><span class="freq">Segunda-feira</span><span>Leadership Bot Semanal M1 — DM por líder</span></div>
-    <div class="cadencia-item"><span class="time">—</span><span class="freq">Em breve</span><span>M2 Bot Semanal — DM por M2</span></div>
-  </div>
-</div>
-
 <nav id="nav">
-  <button class="active" onclick="showTab(0)">UV Results Geral</button>
-  <button onclick="showTab(1)">Leadership M1 Diário</button>
-  <button onclick="showTab(2)">Leadership M1 Semanal</button>
-  <button onclick="showTab(3)">M2 Diário</button>
-  <button onclick="showTab(4)">M2 Semanal</button>
+  <button class="active" onclick="showTab(0)">🏠 Início</button>
+  <button onclick="showTab(1)">UV Results Geral</button>
+  <button onclick="showTab(2)">Leadership M1 Diário</button>
+  <button onclick="showTab(3)">Leadership M1 Semanal</button>
+  <button onclick="showTab(4)">M2 Diário</button>
+  <button onclick="showTab(5)">M2 Semanal</button>
 </nav>
 
 <main>
 
-<!-- TAB 0: UV Results Geral -->
+<!-- TAB 0: HOME -->
 <div class="bot-page active" id="tab-0">
+  <div class="hero-page">
+    <h1>🚀 UV Results Bots</h1>
+    <p class="subtitle">Uma suite completa de bots que entrega os resultados de NPS diretamente no Slack — com rapidez, clareza e o nível de detalhe certo para cada liderança agir.</p>
+
+    <div class="value-cards">
+      <div class="value-card">
+        <div class="vc-icon">⚡</div>
+        <div class="vc-title">Mais rápido que o dashboard</div>
+        <div class="vc-desc">Os dados chegam antes da atualização do dashboard, permitindo ação imediata.</div>
+      </div>
+      <div class="value-card">
+        <div class="vc-icon">🎯</div>
+        <div class="vc-title">Visibilidade imediata</div>
+        <div class="vc-desc">Cada liderança recebe exatamente o que precisa ver, sem precisar procurar.</div>
+      </div>
+      <div class="value-card">
+        <div class="vc-icon">📊</div>
+        <div class="vc-title">Análise sem esforço</div>
+        <div class="vc-desc">NPS, detratores, verbatims e expirados — tudo consolidado em uma DM.</div>
+      </div>
+      <div class="value-card">
+        <div class="vc-icon">🔔</div>
+        <div class="vc-title">O resultado chega até você</div>
+        <div class="vc-desc">Proatividade total — sem precisar abrir nenhuma ferramenta.</div>
+      </div>
+    </div>
+
+    <div class="cadencia-box">
+      <h3>Cadência de envio</h3>
+      <div class="cad-row"><span class="cad-time">11:00</span><span class="cad-freq">Seg a Sex</span><span class="cad-name">UV Results Bot — canal da liderança</span></div>
+      <div class="cad-row"><span class="cad-time">14:30</span><span class="cad-freq">Seg a Sex</span><span class="cad-name">Leadership Bot M1 — DM por líder</span></div>
+      <div class="cad-row"><span class="cad-time">15:00</span><span class="cad-freq">Seg a Sex</span><span class="cad-name">M2 Bot — DM por M2</span></div>
+      <div class="cad-row"><span class="cad-time">16:30</span><span class="cad-freq">Segunda-feira</span><span class="cad-name">Leadership Bot Semanal M1 — DM por líder</span></div>
+      <div class="cad-row"><span class="cad-time">—</span><span class="cad-freq">Em breve</span><span class="cad-name">M2 Bot Semanal — DM por M2</span></div>
+    </div>
+
+    <div class="bot-nav-grid">
+      <button class="bot-nav-btn" onclick="showTab(1)">
+        <span class="bn-icon">📊</span>
+        <span class="bn-text"><div class="bn-title">UV Results Geral</div><div class="bn-sub">Canal · Seg a Sex · 11:00</div></span>
+      </button>
+      <button class="bot-nav-btn" onclick="showTab(2)">
+        <span class="bn-icon">👤</span>
+        <span class="bn-text"><div class="bn-title">Leadership M1 Diário</div><div class="bn-sub">DM por M1 · Seg a Sex · 14:30</div></span>
+      </button>
+      <button class="bot-nav-btn" onclick="showTab(3)">
+        <span class="bn-icon">📆</span>
+        <span class="bn-text"><div class="bn-title">Leadership M1 Semanal</div><div class="bn-sub">DM por M1 · Segunda · 16:30</div></span>
+      </button>
+      <button class="bot-nav-btn" onclick="showTab(4)">
+        <span class="bn-icon">🚀</span>
+        <span class="bn-text"><div class="bn-title">M2 Diário</div><div class="bn-sub">DM por M2 · Seg a Sex · 15:00</div></span>
+      </button>
+      <button class="bot-nav-btn" onclick="showTab(5)">
+        <span class="bn-icon">📈</span>
+        <span class="bn-text"><div class="bn-title">M2 Semanal</div><div class="bn-sub">DM por M2 · Segunda · Em breve</div></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 1: UV Results Geral -->
+<div class="bot-page" id="tab-1">
+  <button class="back-btn" onclick="showTab(0)">← Voltar ao início</button>
   <div class="bot-header">
     <h2>UV Results Bot — Visão Geral</h2>
     <div class="meta">
@@ -140,13 +200,11 @@
     </div>
     <p>Publica diariamente no canal da liderança um resumo completo dos resultados de NPS de UV. A mensagem principal traz o acumulado do mês, e a thread contém os detalhes do dia anterior.</p>
   </div>
-
   <div class="legend">
     <div class="legend-item"><span class="dot-green"></span> NPS ≥ 88 (verde)</div>
     <div class="legend-item"><span class="dot-yellow"></span> NPS 84–87 (amarelo)</div>
     <div class="legend-item"><span class="dot-red"></span> NPS ≤ 83 (vermelho)</div>
   </div>
-
   <div class="section-title">Mensagem principal — canal</div>
   <div class="slack-card">
     <div class="slack-card-header">
@@ -180,7 +238,6 @@
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Detalhes do dia na thread abaixo 👇</p>
     </div>
   </div>
-
   <div class="section-title">Thread — detalhes do dia</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -230,8 +287,9 @@
   </div>
 </div>
 
-<!-- TAB 1: Leadership M1 Diário -->
-<div class="bot-page" id="tab-1">
+<!-- TAB 2: Leadership M1 Diário -->
+<div class="bot-page" id="tab-2">
+  <button class="back-btn" onclick="showTab(0)">← Voltar ao início</button>
   <div class="bot-header">
     <h2>UV Leadership Bot M1 — Diário</h2>
     <div class="meta">
@@ -241,12 +299,10 @@
     </div>
     <p>Envia uma DM personalizada para cada líder M1 com os resultados do time dele. Inclui NPS do dia e do mês, comparativo com cluster e UV, ranking de Xpeers, detratores e jobs expirados.</p>
   </div>
-
   <div class="info-grid">
     <div class="info-card"><h4>Fonte dos agentes</h4><p>Tabela de hierarquia — atualiza automaticamente todo mês com os liderados ativos do M1.</p></div>
     <div class="info-card"><h4>Contribuição em p.p.</h4><p>Mede quanto o time do M1 moveu o ponteiro do cluster e de UV — positivo = puxou pra cima, negativo = puxou pra baixo.</p></div>
   </div>
-
   <div class="section-title">Mensagem principal — DM do M1</div>
   <div class="slack-card">
     <div class="slack-card-header">
@@ -283,7 +339,6 @@
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o ranking dos Xpeers e os detratores na thread 👇</p>
     </div>
   </div>
-
   <div class="section-title">Threads — detalhes na DM</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -333,8 +388,9 @@
   </div>
 </div>
 
-<!-- TAB 2: Leadership M1 Semanal -->
-<div class="bot-page" id="tab-2">
+<!-- TAB 3: Leadership M1 Semanal -->
+<div class="bot-page" id="tab-3">
+  <button class="back-btn" onclick="showTab(0)">← Voltar ao início</button>
   <div class="bot-header">
     <h2>UV Leadership Bot M1 — Semanal</h2>
     <div class="meta">
@@ -344,7 +400,6 @@
     </div>
     <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M1, com gráfico de evolução de NPS e compilado de motivos de contato com detratores.</p>
   </div>
-
   <div class="section-title">Mensagem principal — DM do M1</div>
   <div class="slack-card">
     <div class="slack-card-header">
@@ -368,7 +423,6 @@
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o gráfico e os motivos de contato na thread 👇</p>
     </div>
   </div>
-
   <div class="section-title">Threads — detalhes na DM</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -390,8 +444,9 @@
   </div>
 </div>
 
-<!-- TAB 3: M2 Diário -->
-<div class="bot-page" id="tab-3">
+<!-- TAB 4: M2 Diário -->
+<div class="bot-page" id="tab-4">
+  <button class="back-btn" onclick="showTab(0)">← Voltar ao início</button>
   <div class="bot-header">
     <h2>UV M2 Bot — Diário</h2>
     <div class="meta">
@@ -401,12 +456,10 @@
     </div>
     <p>Envia diariamente uma DM para cada M2 com visão consolidada dos clusters que lidera, seguida de mensagens individuais para cada M1 do time com detalhes completos.</p>
   </div>
-
   <div class="info-grid">
     <div class="info-card"><h4>M2 com múltiplos clusters</h4><p>M2s que lideram mais de um cluster recebem o NPS de cada cluster separado, com contribuição individual.</p></div>
     <div class="info-card"><h4>Hierarquia automática</h4><p>M2s e seus M1s são carregados automaticamente da tabela de hierarquia — atualiza sozinho todo mês.</p></div>
   </div>
-
   <div class="section-title">Mensagem principal — DM do M2</div>
   <div class="slack-card">
     <div class="slack-card-header">
@@ -447,7 +500,6 @@
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Panorama geral e detalhes por M1 na thread 👇</p>
     </div>
   </div>
-
   <div class="section-title">Thread panorama geral</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -482,7 +534,6 @@
       </div>
     </div>
   </div>
-
   <div class="section-title" style="margin-top:1.5rem;">Mensagens individuais por M1 (na DM)</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -502,8 +553,9 @@
   </div>
 </div>
 
-<!-- TAB 4: M2 Semanal -->
-<div class="bot-page" id="tab-4">
+<!-- TAB 5: M2 Semanal -->
+<div class="bot-page" id="tab-5">
+  <button class="back-btn" onclick="showTab(0)">← Voltar ao início</button>
   <div class="bot-header">
     <h2>UV M2 Bot — Semanal</h2>
     <div class="meta">
@@ -513,7 +565,6 @@
     </div>
     <p>Envia toda segunda um resumo da semana anterior (domingo a sábado) para cada M2, com gráfico de evolução de NPS de todos os M1s e compilado de motivos de contato.</p>
   </div>
-
   <div class="section-title">Mensagem principal — DM do M2</div>
   <div class="slack-card">
     <div class="slack-card-header">
@@ -541,7 +592,6 @@
       <p style="font-size:0.8rem;color:#999;margin-top:0.75rem;">Veja o gráfico e os motivos na thread 👇</p>
     </div>
   </div>
-
   <div class="section-title">Threads — detalhes na DM</div>
   <div class="thread-container">
     <div class="thread-item">
@@ -570,6 +620,7 @@
 function showTab(i) {
   document.querySelectorAll('.bot-page').forEach((p,j) => p.classList.toggle('active', i===j));
   document.querySelectorAll('#nav button').forEach((b,j) => b.classList.toggle('active', i===j));
+  window.scrollTo(0,0);
 }
 function toggleHelp(btn) {
   const wrap = btn.closest('.help-wrap');
